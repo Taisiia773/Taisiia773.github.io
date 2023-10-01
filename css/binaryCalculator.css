@@ -1,0 +1,157 @@
+/* body{
+    width:33%;
+} */
+#res{
+    background-color:rgb(0, 0, 0);
+    border:solid;
+    border-radius: 20px;
+    height:48px;
+    font-size:20px;
+}
+#btn0,#btn1{
+    background-color:lightgreen; 
+    color:brown;
+}
+
+#btnClr,#btnEql{
+    background-color:darkgreen; 
+    color:white;
+}
+#btnSum,#btnSub,#btnMul,#btnDiv, #btnCom, #btnBraL, #btnBraR{
+    background-color: aliceblue;
+    color:brown;
+}
+button{
+    
+    width:25%;
+    height:36px;
+    font-size:18px;
+    margin:0px;
+    float:left;
+    border-radius: 10px;
+    
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: url("https://bogatyr.club/uploads/posts/2023-02/1677220284_bogatyr-club-p-fon-v-stile-matritsi-foni-3.jpg")
+        no-repeat center center fixed;
+    background-size: cover;
+    /* height: 100vh; */
+    /* display: flex; */
+    position: relative;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: #000000; */
+    color: aliceblue;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    height: 75px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .obl_zam_klas{
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center;
+} */
+
+select{
+    border-radius: 10px;
+}
+input{
+    border-radius: 10px;
+    margin: 4%;
+}
+/* button{
+    border-radius: 10px;
+    margin: 4%;
+} */
+
+.zamienianie{
+    background: rgb(0, 0, 0);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.588);
+    width: 300px;
+    height: 400px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    
+}
+
+#obl_button{
+    width: 50%;
+    text-align: center;
+    align-items: center;
+    float: none;
+}
+
+#zamiana_input{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .obliczenie{
+    background: rgb(0, 0, 0);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.588);
+    width: 300px;
+    height: 400px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+} */
+
+.kalkulator{
+    background: rgb(0, 0, 0);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.588);
+    width: 300px;
+    height: 200px;
+    text-align: center;
+
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+
+#odp_zamiana{
+    background-color:rgb(0, 0, 0);
+    border:solid;
+    border-radius: 20px;
+    height:48px;
+    width: 150px;
+    font-size:20px;
+    /* text-align: center;
+    align-items: center;
+    justify-content: center; */
+}
