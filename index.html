@@ -99,6 +99,42 @@
                 <p>15  ->  F </p>
             
             </div>
+
+            <div class="teoria">
+                <p> 2 -> 10 </p>
+                <p> Przykład: 1010 -> 0*2⁰ + 1*2¹ + 0*2² + 1*2³ = 10</p>
+            </div>
+            <div class="teoria">
+                <p> 2 -> 16 </p>
+                <p> Po prostu podzielić liczbę na grupki, gdzie będzie po 4 cyfry. Zaczynamy od końca, jak w ostatniej grupie brakuje liczb, to przypisujemy 0 </p>
+                <p> Przykład: 1010101001 -> 0010 1010 1001</p>
+                <p> Odpowiedź 910 </p>
+            </div>
+            <div class="teoria">
+                <p> 10 -> 16 </p>
+                <p> Dzielimy przez 16 i reszta z kończ jest naszej odp.</p>
+                <p>Przykład: 1600 : 16 = 100 r 0</p>
+                <p>100 : 16 = 6 r 4</p>
+                <p>6 : 16 = 0 r 6  Czyli odpowiedź jest 640.</p>
+            </div>
+            <div class="teoria">
+                <p> 10 -> ZM </p>
+                <p> Musimy zamienić liczbę na system dwójkowy i przed liczbą dopisać 1. albo 0.</p>
+                <p> 1. Kiedy liczba jest ujemną 0. Kiedy liczba jest dodatnią</p>
+                <p>Przykład: 10 -> 1010(system dwójkowy) i dopisujemy 0., bo liczba jest dodatnią, czyli odpowiedź jest 0.1010</p>
+            </div>
+
+            <div class="teoria">
+                <p>ZM -> U1</p>
+                <p>Jeżeli liczba jest ujemną, to musimy zamienić 0 na 1, a 1 na 0(to robimy tylko z liczbami po kropce).</p>
+                <p>Przykład: 1.1010(ZM) -> 1.0101(U1)</p>
+                <p>Jeżeli liczba jest dodatnią to nic nie zmieniamy. Przykład: 0.1010(ZM) -> 0.1010(U1)</p>
+            </div>
+            <div class="teoria">
+                <p> U1 -> U2 </p>
+                <p>Jeżeli liczba jest ujemną, to musimy dodać do niej 1.</p>
+                <p>Przykład: 1.0101(U1) -> 1.0110(U2)</p>
+                <p>Jeżeli liczba jest dodatnią, to nic nie zmieniamy. Przykład: 0.1010(U1) -> 0.1010(U2).</p>
         
         <script src="js/binaryCalculator.js" type="text/javascript"></script>
     </body>
