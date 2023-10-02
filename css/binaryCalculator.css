@@ -157,7 +157,7 @@ input{
 }
 
 
-.teoria{
+.teoria1{
     background: rgb(0, 0, 0);
     padding: 20px;
     margin: 20px;
@@ -165,6 +165,21 @@ input{
     box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.588);
     width: 300px;
     height: 900px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teoria{
+    background: rgb(0, 0, 0);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.588);
+    width: 300px;
+    height: 500px;
     text-align: center;
 
     display: flex;
