@@ -85,6 +85,8 @@ function clickClear() {
 
 var resultScreen_zamiana = document.getElementById("odp_zamiana");
 
+var resultP_zamiana = document.getElementById("p_error");
+
 // var obl_button = document.querySelector('#obl_button');
 var kod_wybor_zamienianie1 = document.querySelector('#kod_wybor_zamienianie1');
 var kod_wybor_zamienianie2 = document.querySelector('#kod_wybor_zamienianie2');
@@ -100,9 +102,13 @@ var option_szesnaskowy = new Option("kod szesnastkowy(A)", "szesnaskowy");
 select_zamiana_na = zamiana_na.kod_wybor_zamienianie2;
 var zamiana_int = document.querySelector("#zamiana_input");
 var lst_main = [];
+var lst_zm = [];
+var lst_u2 = [];
+var list_u2 = []
 
 var list_dziesientny = [];
 var list_szesnaskow_reszta = [];
+var list_dzisietny_reszta = [];
 var list_szesnaskowy = [
     [0,0],
     [1,1],
@@ -125,15 +131,7 @@ var reszta_index = 0;
 
 
 function dwojkowy_na_dziesietny(lst, lst2){
-    // var il = 0;
-    // // for (var element of lst){
-    // for (var element = lst_main.length - 1; i >= 0; i--) {
-    //     var x = element * (2 ** il);
-    //     il += 1;
-    //     list_dziesientny.unshift(x);
-    // }
-    // alert(list_dziesientny);
-    lst[0].slice().reverse()
+    lst.slice().reverse()
                 .forEach(function(item, i, lst) {
                     // alert( i + ": " + item + " (массив:" + lst_main + ")" );
                     var x = item * (2 ** i);
@@ -146,65 +144,90 @@ function clearSearch() {
     document.getElementById('zamiana_input').value = '';
 }
 
-// function isPositive(number) {
-//     return number == 1 && 0;
-// }
 
-// function findMatchingIndexes(list1, lists2) {
-//     const indexes = [];
-  
-//     for (let j = 0; j < lists2.length; j++) {
-//       var currentList = lists2[j];
-  
-//       for (let i = 0; i < list1.length; i++) {
-//         var element = list1[i];
-  
-//         if (currentList.includes(element)) {
-//           indexes.push(i);
-//         }
-//       }
-//     }
-  
-//     return indexes;
-//   }
+function dziesitny_na_szesnastkowy(kod_dziesietny, list_szesnaskow_reszta, list_szesnaskowy ){
+    do {
+        var del_bez_reszty = parseInt((kod_dziesietny / 16));
+        var reszta = kod_dziesietny % 16;
+        list_szesnaskow_reszta.unshift(reszta);
+        // alert(list_szesnaskow_reszta);
+        // alert(del_bez_reszty);
+        kod_dziesietny = del_bez_reszty;
+    } while (del_bez_reszty && reszta > 0)
 
+        list_szesnaskow_reszta.forEach(function(item_r_1, i_r_1, list_szesnaskow_reszta) {
+            list_szesnaskowy.forEach(function(item_r, i_r, list_szesnaskowy) {
+                // alert(list_szesnaskowy[reszta_index][0]);
+                // alert(i_r)
+                if (list_szesnaskowy[i_r][0] == list_szesnaskow_reszta[i_r_1]) {
+                    list_szesnaskow_reszta[i_r_1] = list_szesnaskowy[i_r][1];
+                }
+            
+            });
+        });
+}
 
+function dziesitny_na_dwojkowy(kod_dziesietny, list_dzisietny_reszta){
+    do {
+        var del_bez_reszty = parseInt((kod_dziesietny / 2));
+        var reszta = kod_dziesietny % 2;
+        list_dzisietny_reszta.unshift(reszta);
+        // alert(list_dzisietny_reszta);
+        // alert(del_bez_reszty);
+        kod_dziesietny = del_bez_reszty;
+    } while (del_bez_reszty > 0)
+}
 
-// function findMatchingIndexes(list1, lists2) {
-//     var result = [];
-  
-//     for (let j = 0; j < lists2.length; j++) {
-//       var currentList = lists2[j];
-//       var indexes = [];
-  
-//       for (let i = 0; i < list1.length; i++) {
-//         var element = list1[i];
-  
-//         if (currentList.includes(element)) {
-//           indexes.push(i);
-//         }
-//       }
-  
-//       result.push({
-//         list: currentList,
-//         indexes: indexes
-//       });
-//     }
-  
-//     return result;
-//   }
-  
-//   const list1 = [1, 2, 3, 4, 5];
-//   const lists2 = [
-//     [3, 4, 5, 6, 7],
-//     [8, 9, 10],
-//     [11, 12, 13],
-//     // Add the rest of the lists here
-//   ];
-  
-//   const result = findMatchingIndexes(list1, lists2);
-//   console.log(result);
+function dzisitny_na_zm(kod_dziesietny, list_dzisietny_reszta, p_m){
+    dziesitny_na_dwojkowy(kod_dziesietny, list_dzisietny_reszta);
 
+    if (p_m == "-"){
+        list_dzisietny_reszta.unshift(".");
+        list_dzisietny_reszta.unshift("1");
+        resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+    }
+    else if (p_m == "+"){
+        list_dzisietny_reszta.unshift(".");
+        list_dzisietny_reszta.unshift("0");
+        resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+    }
+    else{
+        resultScreen_zamiana.innerHTML += "error";
+        resultP_zamiana.innerHTML += "musisz przed liczbą napisać + albo -";
+        clearSearch();
+    }
+}
+
+function zm_na_u1(p_m, list_dzisietny_reszta){
+    if (p_m == "+") {
+        var p_u1 = 0;
+    }
+    else if (p_m == "-") {
+        var p_u1 = 1;
+    }
+
+    if (p_u1 == 0) {
+        resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+    }
+    else if(p_u1 == 1) {
+        var p1 = list_dzisietny_reszta.shift();
+        var p2 = list_dzisietny_reszta.shift();
+        // alert(list_dzisietny_reszta)
+        list_dzisietny_reszta.forEach(function(item_r, i_r, list_dzisietny_reszta) {
+            if (list_dzisietny_reszta[i_r] == '0') {
+                list_dzisietny_reszta[i_r] = 1;
+                // alert(list_dzisietny_reszta[i_r])
+            }
+            else if (list_dzisietny_reszta[i_r] == '1') {
+                list_dzisietny_reszta[i_r] = 0;
+            }
+        });
+        list_dzisietny_reszta.unshift(p2);
+        list_dzisietny_reszta.unshift(p1);
+        resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+        
+    }
+}
 
 
 function select_zamieniania_1() {
@@ -214,13 +237,20 @@ function select_zamieniania_1() {
 
     if (select_1 == 'dwojkowy') {
 
+        resultP_zamiana.innerHTML = "";
+
+        // kod_wybor_zamienianie2.remove("zm");
+        // kod_wybor_zamienianie2.remove("u1");
+        // kod_wybor_zamienianie2.remove("u2");
+        // kod_wybor_zamienianie2.remove("dwojkowy");
+
         // if (lst_main == 1 && 0){
 
         if (select_2 == 'dziesietny') {
             lst_main.push(zamiana_int.value.split(''));
             document.getElementById('odp_zamiana').value = '';
 
-            dwojkowy_na_dziesietny(lst_main, list_dziesientny);
+            dwojkowy_na_dziesietny(lst_main[0], list_dziesientny);
             resultScreen_zamiana.innerHTML += list_dziesientny.reduce((acc, number) => acc + number);
             clearSearch();
             lst_main.splice(0);
@@ -232,84 +262,208 @@ function select_zamieniania_1() {
             document.getElementById('odp_zamiana').value = '';
 
             dwojkowy_na_dziesietny(lst_main, list_dziesientny);
+            // alert(list_dziesientny)
             var kod_dziesietny = list_dziesientny.reduce((acc, number) => acc + number);
+            dziesitny_na_szesnastkowy(kod_dziesietny, list_szesnaskow_reszta, list_szesnaskowy );
 
-            do {
-                var del_bez_reszty = parseInt((kod_dziesietny / 16));
-                var reszta = kod_dziesietny % 16;
-                list_szesnaskow_reszta.unshift(reszta);
-                // alert(list_szesnaskow_reszta);
-                // alert(del_bez_reszty);
-                kod_dziesietny = del_bez_reszty;
-            } while (del_bez_reszty && reszta > 0)
+            resultScreen_zamiana.innerHTML += list_szesnaskow_reszta;
+            clearSearch();
+            lst_main.splice(0);
+            list_dziesientny.splice(0);
+            list_szesnaskow_reszta.splice(0);
+        }
 
+        else if (select_2 !== "dziesietny" && "szesnaskowy") {
+            resultScreen_zamiana.innerHTML += "error"
+            resultP_zamiana.innerHTML += "kod dwójkowy można zamienić tylko na dziesiętny i szesnastkowy"
+            clearSearch();
 
+        }
 
-            // list_dziesientny.forEach(function(item, i, list_szesnaskowy) {
-                // list_szesnaskow_reszta.forEach(function(item_r, i_r, list_szesnaskow_reszta) {
-                //     var len = list_szesnaskow_reszta.length;
-                //     var reszta_index = 0;
-                //     // alert(list_szesnaskowy[reszta_index][0]);
-                //     do {
-                //         if (list_szesnaskow_reszta[i_r] == list_szesnaskowy[reszta_index][0]) {
-                //             list_szesnaskow_reszta[i_r] = list_szesnaskowy[reszta_index][1];
-                //             alert(list_szesnaskowy[reszta_index][1]);
-                //             reszta_index = 15;
-                //             // alert(list_szesnaskowy[reszta_index][1]);
-                //         }
-                //         else {
-                //             reszta_index += 1;
-                //             // alert(list_szesnaskowy[reszta_index][1])
-                //         }
-                //     } while(reszta_index < 15 && len !== i_r);
-                // });
-                list_szesnaskow_reszta.forEach(function(item_r_1, i_r_1, list_szesnaskow_reszta) {
-                    list_szesnaskowy.forEach(function(item_r, i_r, list_szesnaskowy) {
-                        // alert(list_szesnaskowy[reszta_index][0]);
-                        // alert(i_r)
-                        if (list_szesnaskowy[i_r][0] == list_szesnaskow_reszta[i_r_1]) {
-                            list_szesnaskow_reszta[i_r_1] = list_szesnaskowy[i_r][1];
-                            // alert(list_szesnaskowy[i_r][1], list_szesnaskow_reszta);
-                            // reszta_index += 1;
-                            // alert(list_szesnaskowy[reszta_index][1]);
-                        }
-                        
-                        // reszta_index += 1;
-                    
-                    });
-                });
+        // kod_wybor_zamienianie2.add("zm");
+        // kod_wybor_zamienianie2.add("u1");
+        // kod_wybor_zamienianie2.add("u2");
+        // kod_wybor_zamienianie2.add("dwojkowy");
 
-                // alert(list_dziesientny);
-            // });
+    }
 
+    else if (select_1 == 'dziesietny') {
 
+        resultP_zamiana.innerHTML = "";
 
-            // do {
-            //     var reszta = kod_dziesietny % 16;
-            //     list_szesnaskow_reszta.unshift(reszta);
-            //     alert(list_szesnaskow_reszta);
-            // } while (reszta > 0)
+        if (select_2 == "dwojkowy"){
 
+            document.getElementById('odp_zamiana').value = '';
 
+            var kod_dziesietny = zamiana_int.value;
+            // alert(kod_dziesietny);
+            dziesitny_na_dwojkowy(kod_dziesietny, list_dzisietny_reszta);
+
+            resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+            clearSearch();
+            lst_main.splice(0);
+            list_dziesientny.splice(0);
+            list_dzisietny_reszta.splice(0);
+        }
+
+        else if (select_2 == "szesnaskowy"){
+
+            document.getElementById('odp_zamiana').value = '';
+
+            var kod_dziesietny = zamiana_int.value;
+            // alert(kod_dziesietny);
+            // dziesitny_na_dwojkowy(kod_dziesietny, list_dzisietny_reszta);
+
+            dziesitny_na_szesnastkowy(kod_dziesietny, list_szesnaskow_reszta, list_szesnaskowy );
 
 
             resultScreen_zamiana.innerHTML += list_szesnaskow_reszta;
             clearSearch();
             lst_main.splice(0);
             list_dziesientny.splice(0);
-            list_szesnaskow_reszta.splice(0)
+            list_dzisietny_reszta.splice(0);
         }
-        // }
 
-        // else {
-        //     document.getElementById('odp_zamiana').value = 'error';
-        //     alert("error");
-        //     clearSearch();
-        //     lst_main.splice(0);
-        //     list_dziesientny.splice(0);
-        // }
+
+        else if (select_2 == "zm"){
+            lst_main.push(zamiana_int.value.split(''));
+
+
+            var p_m = lst_main[0].shift();
+
+
+            document.getElementById('odp_zamiana').value = '';
+
+            var kod_dziesietny = lst_main[0].join('');
+
+            dzisitny_na_zm(kod_dziesietny, list_dzisietny_reszta, p_m);
+            
+            clearSearch();
+            lst_main.splice(0);
+            list_dziesientny.splice(0);
+            list_dzisietny_reszta.splice(0);
+        }
+
+        else if (select_2 == "u1"){
+            lst_main.push(zamiana_int.value.split(''));
+
+            
+            var p_m = lst_main[0].shift();
+
+
+            document.getElementById('odp_zamiana').value = '';
+
+            var kod_dziesietny = lst_main[0].join('');
+
+            dzisitny_na_zm(kod_dziesietny, list_dzisietny_reszta, p_m);
+            resultScreen_zamiana.innerHTML = '';
+
+
+            zm_na_u1(p_m, list_dzisietny_reszta);
+
+
+            clearSearch();
+            lst_main.splice(0);
+            list_dziesientny.splice(0);
+            list_dzisietny_reszta.splice(0);
+        }
+
+        else if (select_2 == "u2"){
+            lst_main.push(zamiana_int.value.split(''));
+
+            resultScreen_zamiana.innerHTML += "sorki, nie dokończyłam"
+            resultP_zamiana.innerHTML += "musisz liczbę zamienić na  u1 i dodać 1"
+            clearSearch();
+
+            
+            // var p_m = lst_main[0].shift();
+
+
+            // document.getElementById('odp_zamiana').value = '';
+
+            // var kod_dziesietny = lst_main[0].join('');
+
+            // dzisitny_na_zm(kod_dziesietny, list_dzisietny_reszta, p_m);
+            // resultScreen_zamiana.innerHTML = '';
+
+            // // list_u2 = list_dzisietny_reszta;
+            // // alert(list_dzisietny_reszta)
+
+
+            // zm_na_u1(p_m, list_dzisietny_reszta);
+            // resultScreen_zamiana.innerHTML = '';
+            // // alert(list_dzisietny_reszta)
+
+            // if (p_m == "+") {
+            //     resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+            // }
+            // else if (p_m == "-") {
+            //     alert(list_dzisietny_reszta)
+            //     var p1 = list_dzisietny_reszta.shift();
+            //     var p2 = list_dzisietny_reszta.shift();
+            //     alert(list_dzisietny_reszta)
+            //     // alert(list_dzisietny_reszta)
+            //     zm_na_u1(p_m, list_dzisietny_reszta);
+            //     alert(list_dzisietny_reszta);
+            //     // dwojkowy_na_dziesietny(list_dzisietny_reszta, list_dziesientny);
+            //     // alert(list_dziesientny)
+            //     // alert(list_dzisietny_reszta)
+            //     // var u2_int = list_dzisietny_reszta.reduce((acc, number) => acc + number);
+            //     // u2_int += 1;
+            //     // alert(u2_int)
+
+            //     // dziesitny_na_dwojkowy(u2_int, lst_u2);
+
+
+            //     // list_dzisietny_reszta.unshift(p2);
+            //     // list_dzisietny_reszta.unshift(p1);
+            //     // alert(list_dzisietny_reszta)
+            //     // resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+            // }
+            // else{
+            //     resultScreen_zamiana.innerHTML += "error";
+            //     resultP_zamiana.innerHTML += "musisz przed liczbą napisać + albo -";
+            //     clearSearch();
+            // }
+
+
+            
+            clearSearch();
+            lst_main.splice(0);
+            list_dziesientny.splice(0);
+            list_dzisietny_reszta.splice(0);
+        }
+
+
+    // else if (select_1 == 'szesnaskowy') {
+
+    //     resultP_zamiana.innerHTML = "";
+
+    //     if (select_2 == "dwojkowy"){
+
+    //         document.getElementById('odp_zamiana').value = '';
+
+    //         var kod_dziesietny = zamiana_int.value;
+    //         // alert(kod_dziesietny);
+    //         dziesitny_na_dwojkowy(kod_dziesietny, list_dzisietny_reszta);
+
+    //         resultScreen_zamiana.innerHTML += list_dzisietny_reszta.join('');
+    //         clearSearch();
+    //         lst_main.splice(0);
+    //         list_dziesientny.splice(0);
+    //         list_dzisietny_reszta.splice(0);
+    //     }
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 
